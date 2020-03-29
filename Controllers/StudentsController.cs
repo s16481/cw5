@@ -4,6 +4,7 @@ using cw2.DAL;
 using cw2.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace cw2.Controllers
 {
@@ -12,8 +13,7 @@ namespace cw2.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IDbService _dbService;
-        private string db = "Data Source=db-mssql;Initial Catalog=s16481;Integrated Security=True";
-        
+
         public StudentsController(IDbService dbService)
         {
             _dbService = dbService;

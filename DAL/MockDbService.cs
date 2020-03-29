@@ -7,6 +7,7 @@ namespace cw2.DAL
     public class MockDbService : IDbService
     {
         private static IEnumerable<Student> _students;
+        
 
         static MockDbService()
         {
@@ -21,6 +22,11 @@ namespace cw2.DAL
         public IEnumerable<Student> GetStudents()
         {
             return _students;
+        }
+
+        public IEnumerable<Enrollment> GetEnrollment(string indexNumber)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
