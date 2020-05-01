@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Data.SqlClient;
-using cw2.DAL;
-using cw2.Models;
+using cw4.Models;
+using cw4.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic.CompilerServices;
 
-namespace cw2.Controllers
+namespace cw4.Controllers
 {
     [ApiController]
     [Route("api/students")]
     public class StudentsController : ControllerBase
     {
-        private readonly IDbService _dbService;
+        private readonly IStudentsDbService _dbService;
 
-        public StudentsController(IDbService dbService)
+        public StudentsController(IStudentsDbService dbService)
         {
             _dbService = dbService;
         }

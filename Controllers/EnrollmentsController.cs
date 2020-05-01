@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Data.SqlClient;
-using cw2.DAL;
-using cw2.Models;
-using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+using cw4.DTOs;
+using cw4.Models;
+using cw4.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic.CompilerServices;
+using Newtonsoft.Json.Linq;
 
-namespace cw2.Controllers
+namespace cw4.Controllers
 {
     [ApiController]
     [Route("api/enrollments")]
     public class EnrollmentsController : ControllerBase
     {
-        private readonly IDbService _dbService;
+        private readonly IStudentsDbService _dbService;
 
-        public EnrollmentsController(IDbService dbService)
+        public EnrollmentsController(IStudentsDbService dbService)
         {
             _dbService = dbService;
         }
@@ -22,7 +22,39 @@ namespace cw2.Controllers
         [HttpGet("{indexNumber}")]
         public IActionResult GetEnrollment(string indexNumber)
         {
-            return Ok(_dbService.GetEnrollment(indexNumber));
+            return Ok(_dbService.GetEnrollmentByIndexNumber(indexNumber));
+        }
+
+        /*[HttpPost]
+        public IActionResult EnrollStudent([FromBody]JsonElement body)
+        {
+            JObject json = JObject.Parse(JsonSerializer.Serialize(body));
+            Student student = new Student();
+            student.IndexNumber = json["IndexNumber"].ToString();
+            student.FirstName = json["FirstName"].ToString();
+            student.LastName = json["LastName"].ToString();
+            student.BirthDate = DateTime.Parse(json["BirthDate"].ToString());
+            Studies studies = _dbService.GetStudies(json["Studies"].ToString());
+            Enrollment enrollment = _dbService.GetEnrollmentByIdStudy(studies.IdStudy);
+            if (_dbService.EnrollStudent(student, enrollment) == false)
+                return BadRequest("Duplicated indexNumber");
+            if (studies == null)
+                return BadRequest();
+            var ret = new CreatedResult("", enrollment);
+            return Ok(enrollment);
+        }*/
+        [HttpPost]
+        public IActionResult EnrollStudent(EnrollmentRequest request)
+        {
+            try
+            {
+                var result = _dbService.EnrollStudent(request);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }

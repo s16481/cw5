@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace cw2.Models
+namespace cw4.Models
 {
     public class Enrollment
     {

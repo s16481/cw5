@@ -1,11 +1,11 @@
-using cw2.DAL;
+using cw4.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace cw2
+namespace cw4
 {
     public class Startup
     {
@@ -19,7 +19,7 @@ namespace cw2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDbService, DbService>();
+            services.AddSingleton<IStudentsDbService, DbService>();
             services.AddControllers();
         }
 

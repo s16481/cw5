@@ -1,4 +1,6 @@
-﻿namespace cw2.Models
+﻿using System;
+
+namespace cw4.Models
 {
     public class Student
     {
@@ -6,6 +8,8 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string IndexNumber { get; set; }
+        
+        public DateTime BirthDate { get; set; }
 
         public Student(int idStudent, string firstName, string lastName)
         {

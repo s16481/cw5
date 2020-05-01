@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using cw2.Models;
+using cw4.DTOs;
+using cw4.Models;
 
-namespace cw2.DAL
+namespace cw4.Service
 {
-    public class MockDbService : IDbService
+    public class MockDbService : IStudentsDbService
     {
         private static IEnumerable<Student> _students;
         
@@ -24,7 +25,22 @@ namespace cw2.DAL
             return _students;
         }
 
-        public IEnumerable<Enrollment> GetEnrollment(string indexNumber)
+        public IEnumerable<Enrollment> GetEnrollmentByIndexNumber(string indexNumber)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Studies GetStudies(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool AddStudent(Student student, Enrollment enrollment)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Enrollment EnrollStudent(EnrollmentRequest request)
         {
             throw new System.NotImplementedException();
         }
