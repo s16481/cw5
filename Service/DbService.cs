@@ -85,7 +85,6 @@ namespace cw4.Service
             using (SqlCommand command = new SqlCommand())
             {
                 command.Connection = connection;
-                //command.CommandText = String.Format("select E.IdEnrollment, Semester, IdStudy, StartDate from Student join Enrollment E on Student.IdEnrollment = E.IdEnrollment where IndexNumber='{0}'", indexNumber);
                 command.CommandText = "select E.IdEnrollment, Semester, IdStudy, StartDate from Student join Enrollment E on Student.IdEnrollment = E.IdEnrollment where IndexNumber=@indexNumber";
                 command.Parameters.AddWithValue("indexNumber", indexNumber);
                 connection.Open();
@@ -103,52 +102,7 @@ namespace cw4.Service
 
             return enrollments;
         }
-        
-        /*public Enrollment GetEnrollmentByIdStudy(int idStudy)
-        {
-            String db = "Data Source=db-mssql;Initial Catalog=s16481;Integrated Security=True";
-            using (SqlConnection connection = new SqlConnection(db))
-            using (SqlCommand command = new SqlCommand())
-            {
-                command.Connection = connection;
-                command.CommandText = "select E.IdEnrollment, Semester, E.IdStudy, StartDate from Studies join Enrollment E on Studies.IdStudy = E.IdStudy where Semester=1";
-                connection.Open();
-                var dataRow = command.ExecuteReader();
-                if(dataRow.Read())
-                {
-                    var enrollment = new Enrollment();
-                    enrollment.IdEnrollment = IntegerType.FromString(dataRow["IdEnrollment"].ToString());
-                    enrollment.Semester = IntegerType.FromString(dataRow["Semester"].ToString());
-                    enrollment.IdStudy = IntegerType.FromString(dataRow["IdStudy"].ToString());
-                    enrollment.StartDate = Convert.ToDateTime(dataRow["StartDate"].ToString());
-                    return enrollment;
-                }
-                command.CommandText = "insert into Enrollment (IdEnrollment, Semester, IdStudy, StartDate) VALUES ((SELECT MAX(IdEnrollment) FROM Enrollment) + 1, 1, @idStudy, CURRENT_TIMESTAMP); ";
-                command.Parameters.AddWithValue("idStudy", idStudy);
-                command.ExecuteNonQuery();
-                return GetEnrollmentByIdStudy(idStudy);
-            }
-        }
-        
-        public Enrollment GetEnrollmentByIdStudy(int idStudy, SqlCommand command)
-        {
-                command.CommandText = "select E.IdEnrollment, Semester, E.IdStudy, StartDate from Studies join Enrollment E on Studies.IdStudy = E.IdStudy where Semester=1";
-                var dataRow = command.ExecuteReader();
-                if(dataRow.Read())
-                {
-                    var enrollment = new Enrollment();
-                    enrollment.IdEnrollment = IntegerType.FromString(dataRow["IdEnrollment"].ToString());
-                    enrollment.Semester = IntegerType.FromString(dataRow["Semester"].ToString());
-                    enrollment.IdStudy = IntegerType.FromString(dataRow["IdStudy"].ToString());
-                    enrollment.StartDate = Convert.ToDateTime(dataRow["StartDate"].ToString());
-                    return enrollment;
-                }
-                command.CommandText = "insert into Enrollment (IdEnrollment, Semester, IdStudy, StartDate) VALUES ((SELECT MAX(IdEnrollment) FROM Enrollment) + 1, 1, @idStudy, CURRENT_TIMESTAMP); ";
-                command.Parameters.AddWithValue("idStudy", idStudy);
-                command.ExecuteNonQuery();
-                return GetEnrollmentByIdStudy(idStudy);
-        }*/
-        
+
         public bool AddStudent(Student student, Enrollment enrollment)
         {
             using (SqlConnection connection = new SqlConnection(db))
@@ -174,29 +128,6 @@ namespace cw4.Service
             }
         }
 
-        /*public bool EnrollStudent(Student student, Enrollment enrollment)
-        {
-            using (SqlConnection connection = new SqlConnection(db))
-            using (SqlCommand command = new SqlCommand())
-            {
-                command.Connection = connection;
-                connection.Open();
-                try
-                {
-                    command.Transaction = connection.BeginTransaction();
-                    Enrollment enroll = GetOrAddEnrollmentToTransaction(command, student, enrollment);
-                    AddStudentToTransaction(command, student, enroll);
-                    command.Transaction.Commit();
-                    return true;
-                }
-                catch (SqlException e)
-                {
-                    command.Transaction.Rollback();
-                    return false;
-                }
-            }
-        }*/
-        
         public Enrollment EnrollStudent(EnrollmentRequest request)
         {
             using (SqlConnection connection = new SqlConnection(db))
@@ -232,24 +163,6 @@ namespace cw4.Service
             command.ExecuteNonQuery();
         }
 
-        /*private Enrollment GetOrAddEnrollmentToTransaction(SqlCommand command, Student student, Enrollment enrollment)
-        {
-            command.CommandText = "select E.IdEnrollment, Semester, E.IdStudy, StartDate from Studies join Enrollment E on Studies.IdStudy = E.IdStudy where Semester=1";
-            var dataRow = command.ExecuteReader();
-            if(dataRow.Read())
-            {
-                enrollment.IdEnrollment = IntegerType.FromString(dataRow["IdEnrollment"].ToString());
-                enrollment.Semester = IntegerType.FromString(dataRow["Semester"].ToString());
-                enrollment.IdStudy = IntegerType.FromString(dataRow["IdStudy"].ToString());
-                enrollment.StartDate = Convert.ToDateTime(dataRow["StartDate"].ToString());
-                return enrollment;
-            }
-            command.CommandText = "insert into Enrollment (IdEnrollment, Semester, IdStudy, StartDate) VALUES ((SELECT MAX(IdEnrollment) FROM Enrollment) + 1, 1, @idStudy, CURRENT_TIMESTAMP); ";
-            command.Parameters.AddWithValue("idStudy", enrollment.IdStudy);
-            command.ExecuteNonQuery();
-            return GetEnrollmentByIdStudy(enrollment.IdStudy);
-        }*/
-        
         private Enrollment GetOrAddEnrollmentToTransaction(SqlCommand command, Studies studies)
         {
             command.Parameters.Clear();

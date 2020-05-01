@@ -24,25 +24,7 @@ namespace cw4.Controllers
         {
             return Ok(_dbService.GetEnrollmentByIndexNumber(indexNumber));
         }
-
-        /*[HttpPost]
-        public IActionResult EnrollStudent([FromBody]JsonElement body)
-        {
-            JObject json = JObject.Parse(JsonSerializer.Serialize(body));
-            Student student = new Student();
-            student.IndexNumber = json["IndexNumber"].ToString();
-            student.FirstName = json["FirstName"].ToString();
-            student.LastName = json["LastName"].ToString();
-            student.BirthDate = DateTime.Parse(json["BirthDate"].ToString());
-            Studies studies = _dbService.GetStudies(json["Studies"].ToString());
-            Enrollment enrollment = _dbService.GetEnrollmentByIdStudy(studies.IdStudy);
-            if (_dbService.EnrollStudent(student, enrollment) == false)
-                return BadRequest("Duplicated indexNumber");
-            if (studies == null)
-                return BadRequest();
-            var ret = new CreatedResult("", enrollment);
-            return Ok(enrollment);
-        }*/
+        
         [HttpPost]
         public IActionResult EnrollStudent(EnrollmentRequest request)
         {
