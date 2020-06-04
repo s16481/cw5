@@ -14,9 +14,9 @@ namespace cw4.Service
         {
             _students = new List<Student>
             {
-                new Student(1, "Jan", "Kowalski"),
-                new Student(2, "Anna", "Malewski"),
-                new Student(3, "Andrzej", "Andrzejewicz")
+                new Student("Jan", "Kowalski"),
+                new Student("Anna", "Malewski"),
+                new Student("Andrzej", "Andrzejewicz")
             };
         }
         

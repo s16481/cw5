@@ -1,9 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cw4.Models
 {
     public class Enrollment
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdEnrollment { get; set; }
         public int Semester { get; set; }
         public int IdStudy { get; set; }
